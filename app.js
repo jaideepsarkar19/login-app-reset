@@ -110,7 +110,7 @@ app.listen(5000, () => {
 
 app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
-  try {
+ 
     const oldUser = await User.findOne({ email });
     if (!oldUser) {
       return res.json({ status: "User Not Exists!!" });
@@ -124,12 +124,15 @@ app.post("/forgot-password", async (req, res) => {
       service: "gmail",
       auth: {
         user: "helpjs19@gmail.com",
-        pass: "rmdklolcsmswvyfw",
+        pass: "btnjvymokmffblsn",
       },
+      tls:{
+        rejectUnauthorized:false
+    }
     });
 
     var mailOptions = {
-      from: "youremail@gmail.com",
+      from: "helpjs19@gmail.com",
       to: "helpjs19@gmail.com",
       subject: "Password Reset",
       text: link,
@@ -137,13 +140,13 @@ app.post("/forgot-password", async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        console.log("READ",error);
       } else {
         console.log("Email sent: " + info.response);
       }
     });
     console.log(link);
-  } catch (error) { }
+ 
 });
 
 app.get("/reset-password/:id/:token", async (req, res) => {
