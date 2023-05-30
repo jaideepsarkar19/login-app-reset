@@ -110,8 +110,9 @@ app.listen(5000, () => {
 
 app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
- 
-    const oldUser = await User.findOne({ email });
+ console.log(req.body)
+    const oldUser = await User.findOne({ "email" :req.body.email.email});
+    console.log(oldUser);
     if (!oldUser) {
       return res.json({ status: "User Not Exists!!" });
     }
